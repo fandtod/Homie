@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.stella.web.orderProduct.mapper.OrderProductMapper">  
+  		<insert id="addOrderProduct">
+  			INSERT INTO order_product(user_id,product_total,product_status,product_placement_time,order_product_item,order_product_unit_price,order_product_quantity)VALUES
+  			<foreach collection="cartCheckList" item="item" index="index" separator=",">
+  			(#{userId},#{totalPrices},1,now(),#{item.cartName},#{item.cartPrice},#{item.cartNum})
+  			</foreach> 			
+  		</insert>
+  		
+  		<select id="orderProductList">
+  		SELECT * FROM order_product
+  		<where>
+  		<if test="(begin==null or begin==null) and (end==null or end==null)">
+  			YEAR(`product_placement_time`) = YEAR(NOW())
+  		</if>
+  		<if test="begin!=null and begin !=''">
+  			and date_format(`product_placement_time`,'%Y-%m-%d %h:%i:%s') >= str_to_date(#{begin},'%Y-%m-%d')
+  		</if>
+  		<if test="end!=null and end !=''">
+  			and date_format(`product_placement_time`,'%Y-%m-%d %h:%i:%s') <![CDATA[<=]]> str_to_date(#{end},'%Y-%m-%d')
+  		</if>
+  		</where>
+  		</select>
+
+  </mapper>

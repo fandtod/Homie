@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.stella.web.orderService.mapper.OrderServiceMapper">  
+  		<select id="memberList" resultType="com.stella.web.orderService.vo.OrderService">
+  			select * from order_service 
+  			<where>
+  			user_id_buyer = #{userId}  
+  			
+  			<if test="searchPrice1 !=null and searchPrice2 !=null">
+  			   and order_total between #{searchPrice1} 
+  			   and #{searchPrice2} 
+  			</if>
+  			<if test="searchText !=null">
+  			  and review_content like concat('%',#{searchText},'%')
+  			</if>
+  			
+  			
+  			</where>
+  		
+  		</select>
+
+  </mapper>
