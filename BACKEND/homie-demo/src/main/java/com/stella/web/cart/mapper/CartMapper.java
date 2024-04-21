@@ -67,5 +67,7 @@ public interface CartMapper {
 
 
 	void dels(Integer userId,List<Integer> cartdelList);
+	
+	void delss(Integer userId,List<Integer> cartdelList);
 
 }
